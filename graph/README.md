@@ -1,11 +1,18 @@
-This directory includes 
+# JSON-RPC Lab
+
+This directory includes:
 
 * `node.py`: which
   * defines a node class. 
     * contains a name, list of children, and a count that's initially zero
     * implements a `show(graph)` method recursively prints the nodes within graph  
   * An `increment(graph)` method that increments the counts of all nodes within graph. 
-* `localDemo.py`: which creates a dag of nodes, which it prints, increments, and prints again.
+* `localDemo.py`: which creates a dag of nodes, which it prints, increments,
+  * and prints again.
+* jclient.py
+*jserver.py
+
+
 
 Your tasks are
 * to create 
