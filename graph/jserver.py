@@ -1,7 +1,10 @@
+#! /usr/bin/env python3
+
 # minimalistic server example from 
 # https://github.com/seprich/py-bson-rpc/blob/master/README.md#quickstart
 
 import socket
+from node import *
 from bsonrpc import JSONRpc
 from bsonrpc import request, service_class
 from bsonrpc.exceptions import FramingError
@@ -21,6 +24,12 @@ class ServerServices(object):
   def nop(self, txt):
     print(txt)
     return txt
+  
+  @request
+  def showTree(self, graph):
+    graph.show()
+    return graph
+
 
 # Quick-and-dirty TCP Server:
 ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

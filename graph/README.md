@@ -9,8 +9,8 @@ This directory includes:
   * An `increment(graph)` method that increments the counts of all nodes within graph. 
 * `localDemo.py`: which creates a dag of nodes, which it prints, increments,
   * and prints again.
-* jclient.py
-*jserver.py
+* `jclient.py`
+* `jserver.py`
 
 
 
