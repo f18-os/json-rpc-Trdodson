@@ -4,6 +4,7 @@
 # https://github.com/seprich/py-bson-rpc/blob/master/README.md#quickstart
 
 import socket
+import json
 from node import *
 from bsonrpc import JSONRpc
 from bsonrpc.exceptions import FramingError
@@ -22,14 +23,12 @@ leaf1 = node("leaf1")
 leaf2 = node("leaf2")
 root = node("root", [leaf1, leaf2])
 
+enc = root.toJson()
+print(server.nop(enc))
+
 # Execute in server:
 result = server.swapper("Hello")
 # "!dlroW olleH"
-print(result)
-graphResult = server.printTree(root)
-graphResult.show()
-
-print(server.nop({1:[2,3]}))
 
 rpc.close() # Closes the socket 's' also
-
+  
