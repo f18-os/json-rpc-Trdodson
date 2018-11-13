@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-# Modified version ofjclient 
-# https://github.com/seprich/py-bson-rpc/blob/master/README.md#quickstart
+# Modified version ofjclient from mimimal-jsonrpc-demo. Supposed to send a serialized tree
+# To be incremented by a server.
 
 import socket
 import json
@@ -28,6 +28,14 @@ flatTree = flatten(root)
 
 jTree = json.dumps(flatTree) #JSON encoded graph.
 
-print(server.nop(jTree))
+#Write the request to a file.
+with open('request.json','w') as jFile:
+    json.dump(flatTree, jFile)
+jFile.close()
+
+fileName = 'request.json'
+
+result = server.sIncrement('request.json')
+print(result)
 
 rpc.close() # Closes the socket 's' also

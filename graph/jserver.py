@@ -1,9 +1,11 @@
 #! /usr/bin/env python3
 
-# minimalistic server example from 
-# https://github.com/seprich/py-bson-rpc/blob/master/README.md#quickstart
+# Modified version ofjclient from minimal-jsonrpc-demo. Supposed to increment graph remotely, then send it back to be
+# decoded and printed.
 
 import socket
+import json
+from serialize import *
 from node import *
 from bsonrpc import JSONRpc
 from bsonrpc import request, service_class
@@ -17,18 +19,18 @@ from bsonrpc.framing import (
 class ServerServices(object):
 
   @request
-  def swapper(self, txt):
-    return ''.join(reversed(list(txt)))
-
-  @request
   def nop(self, txt):
     print(txt)
     return txt
   
   @request
-  def showTree(self, graph):
-    graph.show()
-    return graph
+  def sIncrement(self,jReq):
+    jRoot = unflatten(jReq) # Unflatten a json into a tree
+    
+    jRoot = increment(jRoot) #Increment
+    
+    jRoot = json.dumps(flatten(jReq)) #Flatten it again into JSON.
+    return(jRoot)
 
 
 # Quick-and-dirty TCP Server:
