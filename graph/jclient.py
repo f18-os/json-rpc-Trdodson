@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
-
-# minimalistic client example from 
+# Modified version ofjclient 
 # https://github.com/seprich/py-bson-rpc/blob/master/README.md#quickstart
 
 import socket
 import json
+from serialize import *
 from node import *
 from bsonrpc import JSONRpc
 from bsonrpc.exceptions import FramingError
@@ -18,17 +18,16 @@ s.connect(('localhost', 50001))
 rpc = JSONRpc(s,framing_cls=JSONFramingNone)
 server = rpc.get_peer_proxy()
 
-# Build a tree:
+# Build the graph:
 leaf1 = node("leaf1")
 leaf2 = node("leaf2")
-root = node("root", [leaf1, leaf2])
+root = node("root", [leaf1, leaf1, leaf2])
 
-enc = root.toJson()
-print(server.nop(enc))
+#Flatten the graph.
+flatTree = flatten(root)
 
-# Execute in server:
-result = server.swapper("Hello")
-# "!dlroW olleH"
+jTree = json.dumps(flatTree) #JSON encoded graph.
+
+print(server.nop(jTree))
 
 rpc.close() # Closes the socket 's' also
-  
